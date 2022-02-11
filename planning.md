@@ -1,4 +1,4 @@
-### Your project idea 
+### Project idea 
 
 Trellis is a tool for planning a vegetable garden. It takes the user through the garden planning proccess.
 Users will be able to select the vegetables they want to grow, select the varieties, compile a seed order, and plan when to plant what.
