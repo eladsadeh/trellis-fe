@@ -5,7 +5,7 @@ Users will be able to select the vegetables they want to grow, select the variet
 
 ### Your tech stack (frontend, backend, database)
 
-Frontend: Next.js, React, Ant Design
+Frontend: Next.js, React, Ant Design, Blueprint
 Backend: Python, Django, Django REST Framework
 Database: PostgreSQL
 
