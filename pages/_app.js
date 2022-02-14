@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
 	const getLoginInfo = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
+			// console.log('found token:', token);
 			try {
 				const res = await fetch(`${baseUrl}/users/me/`, {
 					headers: {
@@ -20,8 +20,7 @@ function MyApp({ Component, pageProps }) {
 				});
         if (res.status === 200) {
           const data = await res.json()
-          console.log(data);
-          setUser(data.email)
+          setUser({email: data.email, token: token})
         } else {
           console.log('Could not find user info, please login again');
           setUser(null);
@@ -36,7 +35,6 @@ function MyApp({ Component, pageProps }) {
 	};
 
 	useEffect(() => {
-		console.log('useEffect:');
 		getLoginInfo();
 	}, []);
 	return (

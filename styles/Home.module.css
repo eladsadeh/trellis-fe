@@ -1,7 +1,61 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0;
 }
 
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  width: min(80%, 500px);
+  transition: color 0.15s ease;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  /* color: #0070f3;
+  border-color: #0070f3;*/
+} 
+
+.card span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  width: 4rem;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.card p {
+  margin: 0;
+  text-align: left;
+  font-size: 1.25rem;
+  padding: 10px;
+  /* line-height: 1.5; */
+}
+
+.card.crops {
+  background-color: bisque;
+}
+.card.crops span {
+  background-color: burlywood;
+}
+
+.description {
+  margin: 2rem 0;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+/* CSS from next-create-app */
 .main {
   min-height: 100vh;
   padding: 4rem 0;
@@ -50,11 +104,7 @@
   text-align: center;
 }
 
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
+
 
 .code {
   background: #fafafa;
@@ -71,36 +121,6 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
-}
-
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
-
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
 }
 
 .logo {
