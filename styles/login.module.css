@@ -1,0 +1,85 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* body {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+} */
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+.inputGroup {
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0px;
+}
+
+.formInput {
+	margin-top: 5px;
+	padding: 5px 10px;
+	font-size: 18px;
+	/* margin-top: 5px; */
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+.icon {
+	color: gray;
+	background-color: transparent;
+	border: none;
+	margin-top: 5px;
+}
+
+.password {
+	display: flex;
+}
+
+.button {
+	padding: 5px 15px;
+	margin-top: 10px;
+    font-size: 16px;
+    background-color: bisque;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: burlywood;
+}
+
+.card {
+	background-color: bisque;
+	margin-top: 20px;
+	padding: 20px;
+	border-radius: 12px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.link {
+	padding: 10px;
+}
+
+a.link {
+	color: rgb(109, 53, 0);
+}
+
+.link:hover {
+	background-color: burlywood;
+	border-radius: 8px;
+}

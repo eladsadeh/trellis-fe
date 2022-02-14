@@ -1,0 +1,22 @@
+.login {
+	background-color: rgb(255, 248, 240);
+	padding: 10px 15px;
+	border-radius: 15px;
+}
+
+.login:hover {
+	background-color: rgb(255, 238, 216);
+	cursor: pointer;
+}
+
+.h1 {
+	margin: 0;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: bisque;
+	padding: 15px 20px;
+}
