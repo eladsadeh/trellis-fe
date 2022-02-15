@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
-function varieties(props) {
+function Varieties(props) {
 	return (
 		<Layout>
 			<div>Varieties</div>
@@ -9,4 +9,4 @@ function varieties(props) {
 	);
 }
 
-export default varieties;
+export default Varieties;

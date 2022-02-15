@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 import { useContext } from 'react';
 import { UserContext } from '../context/userContext';
-import { Checkbox, Spinner } from '@blueprintjs/core';
+import { Icon, Spinner } from '@blueprintjs/core';
 
 import Layout from '../components/Layout';
 import styles from '../styles/crops.module.css';
 
-export async function getStaticProps() {
-	return {
-		props: {
-			test: 'My props',
-		},
-	};
-}
+// export async function getStaticProps() {
+// 	return {
+// 		props: {
+// 			test: 'My props',
+// 		},
+// 	};
+// }
 
 function Crops(props) {
-	const { user } = useContext(UserContext);
+	// const { user } = useContext(UserContext);
+	const router = useRouter();
+
 	const [cropsData, setCropsData] = useState(null);
 	const [newCrop, setNewCrop] = useState('');
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -32,7 +36,7 @@ function Crops(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					console.log('get crops:',data);
+					console.log('get crops:', data);
 					setCropsData(data);
 				} else {
 					const data = await res.json();
@@ -43,6 +47,7 @@ function Crops(props) {
 			}
 		} else {
 			console.log('no token found');
+			router.push('/login');
 		}
 	};
 
@@ -73,6 +78,39 @@ function Crops(props) {
 			}
 		} else {
 			console.log('no token found');
+			router.push('/login');
+		}
+	};
+
+	const deleteCrop = async (ev, crop) => {
+		ev.preventDefault();
+		console.log('delete crop:', crop);
+		const token = localStorage.getItem('token');
+		if (token) {
+			console.log('DELETE:', `${baseUrl}/crops/${crop.id}`);
+			try {
+				const res = await fetch(`${baseUrl}/crops/${crop.id}`, {
+					method: 'DELETE',
+					headers: {
+						Authorization: `Token ${token}`,
+					},
+				});
+				if (res.status === 204) {
+					console.log('crop deleted:', crop);
+					// remove the crop from cropsData array
+					const crops = cropsData.filter((c) => c.id !== crop.id);
+					setCropsData(crops);
+					console.log(cropsData);
+				} else {
+					alert(`Could not delete ${crop.name}: ${res.status}`);
+					console.log('bad res:', res);
+				}
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			console.log('no token found');
+			router.push('/login');
 		}
 	};
 
@@ -93,9 +131,9 @@ function Crops(props) {
 	async function handleNewCrop(ev) {
 		ev.preventDefault();
 		console.log(newCrop);
-        // Create a new crop object
+		// Create a new crop object
 		const crop = {
-            // owner_id: user.id,
+			// owner_id: user.id,
 			name: newCrop,
 			selected: true,
 			row_spacing: null,
@@ -119,18 +157,18 @@ function Crops(props) {
 				if (res.status === 201) {
 					const data = await res.json();
 					console.log('res:', data);
-                    const crops = [...cropsData]
-                    // add the new crop with ID to array
-                    crops.push(data);
-                    console.log('new crops:',crops);
-                    setCropsData(crops)
-                    setNewCrop('')
+					const crops = [...cropsData];
+					// add the new crop with ID to array
+					crops.push(data);
+					console.log('new crops:', crops);
+					setCropsData(crops);
+					setNewCrop('');
 				} else {
-					const data = await res.json();
-					console.log(data);
+					console.log('bad status:', res.status);
+                    alert(`Crop already exist - try another name: ${res.status}`)
 				}
 			} catch (err) {
-				console.log(err);
+				console.log('error:', err);
 			}
 		} else {
 			console.log('no token found');
@@ -171,6 +209,9 @@ function Crops(props) {
 									onChange={handleChange}
 								/>
 								<span>{crop.name}</span>
+								<button onClick={(ev) => deleteCrop(ev, crop)}>
+									<Icon color='gray' size={16} icon='delete' />
+								</button>
 							</div>
 						);
 					})}
