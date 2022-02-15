@@ -20,7 +20,8 @@ function MyApp({ Component, pageProps }) {
 				});
         if (res.status === 200) {
           const data = await res.json()
-          setUser({email: data.email, token: token})
+		  console.log(data);
+          setUser({email: data.email, id: data.id, token: token})
         } else {
           console.log('Could not find user info, please login again');
           setUser(null);

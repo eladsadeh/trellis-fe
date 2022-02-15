@@ -1,7 +1,20 @@
 .container {
 	display: flex;
+    flex-wrap: wrap;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+    animation: fadeInAnimation ease-in 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.formContainer {
+    margin: 20px;
+	display: flex;
+    flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
 	align-items: center;
     animation: fadeInAnimation ease 2s;
     animation-iteration-count: 1;
@@ -18,7 +31,7 @@
 }
 
 .checkboxGroup {
-    padding: 5px 0;
+    padding: 5px 10px;
     font-size: 16px;
     border: 1px solid gray;
     border-radius: 6px;
