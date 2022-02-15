@@ -6,6 +6,7 @@ import { UserContext } from '../context/userContext';
 import { Icon, Spinner } from '@blueprintjs/core';
 
 import Layout from '../components/Layout';
+import StepLink from '../components/StepLink'
 import styles from '../styles/crops.module.css';
 
 // export async function getStaticProps() {
@@ -165,7 +166,7 @@ function Crops(props) {
 					setNewCrop('');
 				} else {
 					console.log('bad status:', res.status);
-                    alert(`Crop already exist - try another name: ${res.status}`)
+					alert(`Crop already exist - try another name: ${res.status}`);
 				}
 			} catch (err) {
 				console.log('error:', err);
@@ -216,6 +217,11 @@ function Crops(props) {
 						);
 					})}
 				</form>
+				<StepLink
+					to='varieties'
+					number='2'
+					text='Choose the varieties you want to grow'
+				/>
 			</div>
 		</Layout>
 	);
