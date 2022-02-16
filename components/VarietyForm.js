@@ -10,6 +10,12 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 	const [showDetail, setShowDetail] = useState(isNewVariety ? true : false);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+	const showCancel = () => {
+		return edit && formData !== variety;
+	};
+
+	console.log('show cancel', showCancel());
+
 	const deleteVariety = (id, cropId) => {
 		// Find the crop object
 		let crops = [...cropsData];
@@ -57,7 +63,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		);
 		// replace the variety with the updated one
 		console.log('replacing:', variety);
-		crops[cropIdx].varieties[varietyIdx]= variety;
+		crops[cropIdx].varieties[varietyIdx] = variety;
 		// update states
 		setCropsData(crops);
 		setFormData(variety);
@@ -259,7 +265,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							type='button'
 							onClick={() => {
 								setShowDetail(!showDetail);
-								setEdit(!edit);
+								setEdit(false);
 							}}>
 							Close
 						</button>
@@ -275,7 +281,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							Delete
 						</button>
 					)}
-					{edit && (
+					{showCancel() && (
 						<button
 							type='button'
 							className={utilStyles.button}
