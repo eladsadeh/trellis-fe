@@ -25,17 +25,42 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		setCropsData(crops);
 	};
 	// Add new variety to specific crop
-	const addVariety = (variety, cropId) => {
+	const addVariety = (variety) => {
 		let crops = [...cropsData];
 		// Find the crop object
-		const cropIdx = crops.findIndex((e) => e.id === cropId);
+		const cropIdx = crops.findIndex((e) => e.id === variety.crop_id);
 		console.log('add: crop index =', cropIdx);
 		// remove the variety without ID (added for new variety)
-		crops[cropIdx].varieties.pop();
+		const removed = crops[cropIdx].varieties.pop();
+		console.log('removing tmp variety:', removed);
 		// add the variety retruned from the POST request (with ID)
+		console.log('adding:', variety);
 		crops[cropIdx].varieties.push(variety);
-		// update state
+		// update states
 		setCropsData(crops);
+		setFormData(variety);
+	};
+
+	const updateVariety = (variety) => {
+		let crops = [...cropsData];
+		// Find the crop object
+		const cropIdx = crops.findIndex((e) => e.id === variety.crop_id);
+		console.log('update: crop index =', cropIdx);
+		// find the index of the variety in the crop varieties array
+		const varietyIdx = crops[cropIdx].varieties.findIndex(
+			(e) => e.id === variety.id
+		);
+		console.log(
+			'updating variety:',
+			varietyIdx,
+			crops[cropIdx].varieties[varietyIdx]
+		);
+		// replace the variety with the updated one
+		console.log('replacing:', variety);
+		crops[cropIdx].varieties[varietyIdx]= variety;
+		// update states
+		setCropsData(crops);
+		setFormData(variety);
 	};
 
 	const handleFormChange = (ev) => {
@@ -57,7 +82,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		} else {
 			// revert to original info
 			setFormData(variety);
-			setEdit(false)
+			setEdit(false);
 		}
 	};
 
@@ -92,7 +117,11 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 						console.log('res :', data);
 						// if its a new variety, add it to the array
 						if (isNewVariety) {
-							addVariety(data, formData.crop_id);
+							console.log('add:', data);
+							addVariety(data);
+						} else {
+							// update the form state
+							updateVariety(data);
 						}
 					} else {
 						console.log('bad res:', res);
@@ -162,6 +191,8 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 						<input
 							className={styles.input}
 							name='name'
+							pattern='[a-z]+'
+							title='lower case only'
 							type='text'
 							placeholder='Variety name'
 							value={formData.name}
@@ -190,6 +221,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							style={{ width: '4em' }}
 							name='dtm'
 							type='number'
+							min='1'
 							value={formData.dtm}
 							disabled={!edit}
 							onChange={handleFormChange}
@@ -202,6 +234,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							style={{ width: '4em' }}
 							name='quantity'
 							type='number'
+							min='1'
 							value={formData.quantity}
 							disabled={!edit}
 							onChange={handleFormChange}
@@ -214,6 +247,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							style={{ width: '6em' }}
 							name='seeds_oz'
 							type='number'
+							min='1'
 							value={formData.seeds_oz}
 							disabled={!edit}
 							onChange={handleFormChange}

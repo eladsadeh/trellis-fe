@@ -81,7 +81,12 @@ function Varieties(props) {
 				{cropsData.map((crop, idx) => {
 					return (
 						<div className={styles.crop} key={idx}>
-							<div className={styles.cropsTitle}>
+							<div
+								className={
+									crop.varieties.length
+										? styles.cropsTitle
+										: `${styles.cropsTitle} ${styles.alert}`
+								}>
 								<span>{crop.name}</span>
 								<span>
 									<span className={styles.count}>{crop.varieties.length}</span>
@@ -92,8 +97,15 @@ function Varieties(props) {
 									</button>
 								</span>
 							</div>
-							{crop.varieties.map((variety,idx) => {
-								return <VarietyForm key={idx} variety={variety} cropsData={cropsData} setCropsData={setCropsData}/>;
+							{crop.varieties.map((variety, idx) => {
+								return (
+									<VarietyForm
+										key={idx}
+										variety={variety}
+										cropsData={cropsData}
+										setCropsData={setCropsData}
+									/>
+								);
 							})}
 						</div>
 					);

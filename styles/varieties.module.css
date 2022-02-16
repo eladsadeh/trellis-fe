@@ -10,14 +10,18 @@
 	/* animation-fill-mode: forwards; */
 	/* border: 1px solid gray; */
 }
+
 .cropsTitle {
 	display: flex;
 	padding: 6px;
 	justify-content: space-between;
     align-items: center;
-    background-color: rgb(255, 249, 241);
+    background-color: rgb(249, 255, 234);
     border-radius: 8px;
 	/* border: 1px solid gray; */
+}
+.alert {
+    background-color: #ffe6e6;
 }
 .crop {
 	width: 100%;
@@ -27,7 +31,10 @@
 }
 
 .count {
-    padding: 5px;
+    padding: 1px 6px;
+    /* border: 1px solid gray;
+    border-radius: 50%;
+    aspect-ratio: 1/1; */
 }
 
 .button {

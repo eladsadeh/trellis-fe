@@ -69,7 +69,7 @@ function Crops(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					// console.log('res:', data);
+					console.log('res:', data);
 				} else {
 					const data = await res.json();
 					console.log('bad res:', data);
