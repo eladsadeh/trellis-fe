@@ -1,0 +1,38 @@
+.container {
+	width: min(400px, 95vw);
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* animation: fadeInAnimation ease-in 0.5s;
+	animation-iteration-count: 1; */
+	/* animation-fill-mode: forwards; */
+	/* border: 1px solid gray; */
+}
+.cropsTitle {
+	display: flex;
+	padding: 6px;
+	justify-content: space-between;
+    align-items: center;
+    background-color: rgb(255, 249, 241);
+    border-radius: 8px;
+	/* border: 1px solid gray; */
+}
+.crop {
+	width: 100%;
+	border: 1px solid gray;
+	border-radius: 8px;
+	margin: 2px 0;
+}
+
+.count {
+    padding: 5px;
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    vertical-align: middle;
+    cursor: pointer;
+}

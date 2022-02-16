@@ -5,13 +5,27 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   color: rgb(1, 57, 1);
+  text-align: center;
 }
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
 
+}
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 a {
   color: inherit;
   text-decoration: none;
 }
 
 * {
+  margin: 0;
   box-sizing: border-box;
 }

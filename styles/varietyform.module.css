@@ -1,0 +1,51 @@
+.container {
+	display: flex;
+    justify-content: flex-start;
+	font-size: 18px;
+    width: 100%;
+    border-top: 1px solid gray;
+}
+
+.group {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+    /* justify-content: flex-start; */
+	margin: 5px 10px;
+}
+
+.label {
+	font-size: 18px;
+    padding: 5px;
+    
+}
+
+.title {
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 5px 5px 15px;
+    width: 100%;
+    color: rgb(0, 82, 0);
+}
+
+.title:hover {
+    background-color: antiquewhite;
+}
+
+.input,
+select.input {
+    
+	font-size: 18px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid gray;
+    /* margin: 2; */
+}
+
+.input:disabled, select.input:disabled{
+	background-color: transparent;
+	/* margin: 2px; */
+	border: none;
+    color: black;
+}
