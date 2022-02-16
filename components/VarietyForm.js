@@ -2,17 +2,63 @@ import React, { useState } from 'react';
 import styles from '../styles/varietyform.module.css';
 import utilStyles from '../styles/utils.module.css';
 
-function VarietyForm(props) {
-	const [variety, setVariety] = useState(props.variety);
-	// form data starts with variety changes saved after SAVE
+function VarietyForm({ variety, cropsData, setCropsData }) {
+	// const [variety, setVariety] = useState(props.variety);
 	const isNewVariety = variety.name ? false : true;
-	const [formData, setFormData] = useState(props.variety);
+	const [formData, setFormData] = useState(variety);
 	const [edit, setEdit] = useState(isNewVariety ? true : false);
 	const [showDetail, setShowDetail] = useState(isNewVariety ? true : false);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+	const deleteVariety = (id, cropId) => {
+		// Find the crop object
+		let crops = [...cropsData];
+		const cropIdx = crops.findIndex((e) => e.id === cropId);
+		console.log('delete: crop index =', cropIdx);
+		// Filter out the variety
+		console.log('before:', crops[cropIdx].varieties);
+		crops[cropIdx].varieties = crops[cropIdx].varieties.filter(
+			(e) => e.id !== id
+		);
+		console.log('after:', crops[cropIdx].varieties);
+		// update state
+		setCropsData(crops);
+	};
+	// Add new variety to specific crop
+	const addVariety = (variety, cropId) => {
+		let crops = [...cropsData];
+		// Find the crop object
+		const cropIdx = crops.findIndex((e) => e.id === cropId);
+		console.log('add: crop index =', cropIdx);
+		// remove the variety without ID (added for new variety)
+		crops[cropIdx].varieties.pop();
+		// add the variety retruned from the POST request (with ID)
+		crops[cropIdx].varieties.push(variety);
+		// update state
+		setCropsData(crops);
+	};
+
 	const handleFormChange = (ev) => {
 		setFormData({ ...formData, [ev.target.name]: ev.target.value });
+	};
+
+	const handleCancel = () => {
+		console.log('cancel:', formData);
+		let crops = [...cropsData];
+		// If it's a new variety, remove it from the crop
+		if (isNewVariety) {
+			// Find the crop object
+			const cropIdx = crops.findIndex((e) => e.id === formData.crop_id);
+			console.log('cancel: crop index =', cropIdx);
+			// // remove the variety without ID (added for new variety)
+			const removed = crops[cropIdx].varieties.pop();
+			// // update state
+			setCropsData(crops);
+		} else {
+			// revert to original info
+			setFormData(variety);
+			setEdit(false)
+		}
 	};
 
 	const handleSaveOrEdit = async (ev) => {
@@ -24,6 +70,7 @@ function VarietyForm(props) {
 		} else {
 			console.log('save:', formData);
 			console.log('new = ', isNewVariety);
+			// set fetch method, end point, and good status code
 			const method = isNewVariety ? 'POST' : 'PUT';
 			const endPoint = isNewVariety ? '' : `${formData.id}`;
 			const status = isNewVariety ? 201 : 200;
@@ -43,6 +90,10 @@ function VarietyForm(props) {
 					if (res.status === status) {
 						const data = await res.json();
 						console.log('res :', data);
+						// if its a new variety, add it to the array
+						if (isNewVariety) {
+							addVariety(data, formData.crop_id);
+						}
 					} else {
 						console.log('bad res:', res);
 					}
@@ -53,6 +104,47 @@ function VarietyForm(props) {
 				console.log('no token found');
 				router.push('/login');
 			}
+		}
+	};
+
+	// Delete of existing variety
+	const handleDelete = async (ev) => {
+		ev.preventDefault();
+		// Send DELETE request with variety ID
+		console.log('delete:', formData);
+		// set fetch method, end point, and good status code
+		const method = 'DELETE';
+		const endPoint = `varieties/${formData.id}`;
+		const status = 204;
+		const token = localStorage.getItem('token');
+		console.log(`${method}`, `${baseUrl}/${endPoint}`, formData.id);
+		if (token) {
+			try {
+				const res = await fetch(`${baseUrl}/${endPoint}`, {
+					method: `${method}`,
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Token ${token}`,
+					},
+					body: JSON.stringify(formData),
+				});
+				if (res.status === status) {
+					// IF request is successful, delete the variety from the crop object
+					deleteVariety(formData.id, formData.crop_id);
+					// find the crop object using crop ID
+					// filter out the deleted variety
+					// update the crops state
+					// const data = await res.json();
+					console.log('res :', res);
+				} else {
+					console.log('bad res:', res);
+				}
+			} catch (err) {
+				console.log('error', err);
+			}
+		} else {
+			console.log('no token found');
+			router.push('/login');
 		}
 	};
 
@@ -133,7 +225,8 @@ function VarietyForm(props) {
 							type='button'
 							onClick={() => {
 								setShowDetail(!showDetail);
-								setEdit(!edit)}}>
+								setEdit(!edit);
+							}}>
 							Close
 						</button>
 					)}
@@ -144,16 +237,15 @@ function VarietyForm(props) {
 						{edit ? 'Save' : 'Edit'}
 					</button>
 					{!isNewVariety && (
-						<button
-							className={utilStyles.button}
-							onClick={(ev) => ev.preventDefault()}>
+						<button className={utilStyles.button} onClick={handleDelete}>
 							Delete
 						</button>
 					)}
 					{edit && (
 						<button
+							type='button'
 							className={utilStyles.button}
-							onClick={() => setEdit(!edit)}>
+							onClick={handleCancel}>
 							Cancel
 						</button>
 					)}

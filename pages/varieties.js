@@ -93,7 +93,7 @@ function Varieties(props) {
 								</span>
 							</div>
 							{crop.varieties.map((variety,idx) => {
-								return <VarietyForm key={idx} variety={variety} />;
+								return <VarietyForm key={idx} variety={variety} cropsData={cropsData} setCropsData={setCropsData}/>;
 							})}
 						</div>
 					);

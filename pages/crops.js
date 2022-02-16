@@ -6,7 +6,7 @@ import { UserContext } from '../context/userContext';
 import { Icon, Spinner } from '@blueprintjs/core';
 
 import Layout from '../components/Layout';
-import StepLink from '../components/StepLink'
+import StepLink from '../components/StepLink';
 import styles from '../styles/crops.module.css';
 
 // export async function getStaticProps() {
