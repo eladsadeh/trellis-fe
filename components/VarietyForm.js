@@ -11,10 +11,19 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 	const showCancel = () => {
-		return edit && formData !== variety;
+		return edit && (isNewVariety || formData !== variety);
 	};
 
-	console.log('show cancel', showCancel());
+	const formIsValidated = (form) => {
+		const isValidated = false;
+		isValidated =
+			/^[a-zA-Z]+[\w ]+/.test(form.name) &&
+			/[0-9]+/.test(form.dtm) &&
+			/[0-9]+/.test(form.quantity) &&
+			/[0-9]+/.test(form.seeds_oz);
+		console.log(isValidated);
+		return isValidated;
+	}
 
 	const deleteVariety = (id, cropId) => {
 		// Find the crop object
@@ -198,7 +207,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							className={styles.input}
 							name='name'
 							pattern='[a-z]+'
-							title='lower case only'
+							title='Variety Name'
 							type='text'
 							placeholder='Variety name'
 							value={formData.name}
@@ -226,6 +235,8 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							className={styles.input}
 							style={{ width: '4em' }}
 							name='dtm'
+							pattern='[0-9]+'
+							title='Days to Maturity'
 							type='number'
 							min='1'
 							value={formData.dtm}
@@ -241,6 +252,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							name='quantity'
 							type='number'
 							min='1'
+							title='Number of plants/feet you want to grow'
 							value={formData.quantity}
 							disabled={!edit}
 							onChange={handleFormChange}
@@ -254,6 +266,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 							name='seeds_oz'
 							type='number'
 							min='1'
+							title='Seeds per ounce'
 							value={formData.seeds_oz}
 							disabled={!edit}
 							onChange={handleFormChange}
@@ -273,6 +286,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 					<button
 						className={utilStyles.button}
 						type='button'
+						disabled={edit && !formIsValidated(formData)}
 						onClick={(ev) => handleSaveOrEdit(ev)}>
 						{edit ? 'Save' : 'Edit'}
 					</button>

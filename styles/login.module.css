@@ -17,9 +17,14 @@
      }
 }
 
+.heading {
+	padding: 20px 10px;
+}
+
 .inputGroup {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	margin: 10px 0px;
 }
 

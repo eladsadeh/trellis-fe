@@ -20,9 +20,9 @@ function Login(props) {
 	const [formData, setFormData] = useState(initialFormData);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-	const handleChange = (event) => {
+	const handleChange = (ev) => {
 		setFormData((prevState) => {
-			return { ...prevState, [event.target.id]: event.target.value };
+			return { ...prevState, [ev.target.id]: ev.target.value };
 		});
 	};
 
@@ -56,7 +56,7 @@ function Login(props) {
 		<Layout>
 			<div className={styles.container}>
 				<form className='login-form' onSubmit={handleSubmit}>
-					<h2>Login To Your Account</h2>
+					<h2 className={styles.heading}>Login To Your Account</h2>
 					<div className={styles.inputGroup}>
 						<label htmlFor='email'>Email Address</label>
 						<input
