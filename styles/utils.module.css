@@ -8,6 +8,7 @@
   transition: color 0.15s ease;
   border-radius: 20px;
   margin: 10px;
+  border: 1px solid gray;
 }
 
 .card:hover,

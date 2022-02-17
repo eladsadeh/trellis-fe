@@ -1,21 +1,36 @@
 .table {
 	border-collapse: collapse;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 6px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 6px;
+	border-collapse: collapse;
+	border-radius: 10px;
+	border-style: hidden; /* hide standard table (collapsed) border */
+	box-shadow: 0 0 0 1px #666; /* this draws the table border  */
+}
+.table tr:last-child td:first-child {
+	border-bottom-left-radius: 10px;
+}
+.table tr:last-child td:last-child {
+	border-bottom-right-radius: 15px;
 }
 
-.table thead {
+.table th:first-child {
+	border-top-left-radius: 10px;
+}
+
+.table th:last-child {
+	border-top-right-radius: 10px;
 }
 
 .table td,
 .table th {
-	border: 1px solid #ddd;
+	border: 1px solid rgb(252, 242, 215);
 	padding: 8px;
 }
 
 .table tr:nth-child(even) {
-	background-color: #fffdec;
+	background-color: #fffce1;
 }
 
 .table tr:hover {
