@@ -91,7 +91,7 @@ function Varieties(props) {
 								<span>
 									<span className={styles.count}>{crop.varieties.length}</span>
 									<button
-										className={styles.button}
+										className={styles.icon}
 										onClick={() => addVariety(idx, crop.id)}>
 										<Icon color='gray' size={16} icon='add' />
 									</button>
@@ -111,6 +111,11 @@ function Varieties(props) {
 					);
 				})}
 			</div>
+			<StepLink
+				to='seeds'
+				number='3'
+				text='Order your seeds'
+			/>
 		</Layout>
 	);
 }

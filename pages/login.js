@@ -41,7 +41,8 @@ function Login(props) {
 				const data = await res.json();
 				console.log(data);
 				localStorage.setItem('token', data.auth_token);
-				setUser(formData.email);
+				console.log('user:' , formData);
+				setUser(formData);
 				router.push('/');
 			} else {
 				const data = await res.json();
@@ -51,6 +52,10 @@ function Login(props) {
 			console.log(error);
 		}
 	};
+
+	if (user) return <Layout>
+		<div>Your are currently logged in as {user.email}. Please logout to change account.</div>
+	</Layout>;
 
 	return (
 		<Layout>

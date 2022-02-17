@@ -1,4 +1,5 @@
 .container {
+    /* margin-top: 20px; */
 	display: flex;
     flex-wrap: wrap;
 	flex-direction: column;
@@ -10,15 +11,15 @@
 }
 
 .formContainer {
-    margin: 20px;
+    margin: 10px 20px;
 	display: flex;
     flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-    animation: fadeInAnimation ease 2s;
+    /* animation: fadeInAnimation ease 2s;
     animation-iteration-count: 1;
-    animation-fill-mode: forwards;
+    animation-fill-mode: forwards; */
 }
   
 @keyframes fadeInAnimation {
@@ -44,15 +45,36 @@
 }
 .inputGroup {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+    align-items: center;
 	margin: 10px 0px;
 }
 
 .formInput {
-	margin-top: 5px;
+	/* margin-top: 5px; */
 	padding: 5px 10px;
 	font-size: 18px;
 	/* margin-top: 5px; */
 	border: 1px solid gray;
 	border-radius: 5px;
+}
+
+.icon {
+    background-color: transparent;
+    border: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.addButton {
+    background-color: blanchedalmond;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 5px
+}
+
+.addButton:hover {
+    cursor: pointer;
 }

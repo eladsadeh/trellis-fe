@@ -11,7 +11,8 @@ function Signup(props) {
 	const router = useRouter();
 	// const { user, setUser } = useContext(UserContext);
 	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState(false);
+	// const [error, setError] = useState('');
+    let error = '';
 	const [success, setSuccess] = useState(false);
 
 	const initialFormData = {
@@ -19,25 +20,33 @@ function Signup(props) {
 		password: '',
 		re_password: '',
 	};
-    
+
 	const [formData, setFormData] = useState(initialFormData);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-	const formIsValidated = (form) => {
-		const isValidated = false;
-		isValidated =
-			/^[a-zA-Z]+[\w ]+/.test(form.name) &&
-			/[0-9]+/.test(form.dtm) &&
-			/[0-9]+/.test(form.quantity) &&
-			/[0-9]+/.test(form.seeds_oz);
-		console.log(isValidated);
-		return isValidated;
+	const isError = () => {
+		// From https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
+		let regex = new RegExp(
+			'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]*)(?=.{8,})'
+		);
+
+		if (!/^[\w\.]+@\w+\.\w+$/.test(formData.email)) {
+			return 'Please enter valid eMail address';
+		} else if (!regex.test(formData.password)) {
+			return 'Password must be 8 charcters long and include UPPER case, lowercase, and a number. You can use the following special characters: !,@,#,$,%,&';
+		} else if (formData.password !== formData.re_password) {
+			return 'Passwords must mutch';
+		} else {
+			return '';
+		}
+		// console.log('error:', error);
 	};
 
 	const handleChange = (ev) => {
 		setFormData((prevState) => {
 			return { ...prevState, [ev.target.id]: ev.target.value };
 		});
+        error = isError();
 	};
 
 	const handleSignup = async (ev) => {
@@ -61,7 +70,8 @@ function Signup(props) {
 				}, 3500);
 			} else {
 				const data = await res.json();
-				console.log(data.non_field_errors[0]);
+				console.log(data.password);
+				// console.log(data.non_field_errors[0]);
 			}
 		} catch (error) {
 			console.log(error);
@@ -83,6 +93,7 @@ function Signup(props) {
 							placeholder='Email address'
 							value={formData.email}
 							onChange={handleChange}
+							// onBlur={validateForm}
 							required></input>
 					</div>
 					<div className={styles.inputGroup}>
@@ -95,6 +106,7 @@ function Signup(props) {
 								value={formData.password}
 								placeholder='Password'
 								onChange={handleChange}
+								// onBlur={validateForm}
 								required></input>
 							<button
 								className={styles.icon}
@@ -118,6 +130,7 @@ function Signup(props) {
 								value={formData.re_password}
 								placeholder='Password'
 								onChange={handleChange}
+								// onBlur={validateForm}
 								required></input>
 							<button
 								className={styles.icon}
@@ -131,8 +144,9 @@ function Signup(props) {
 							</button>
 						</div>
 					</div>
-					<button className={styles.button} type='submit'>
-						Signup
+					{error && <div className={styles.card}>{error}</div>}
+					<button className={styles.button} type='submit' disabled={!!error}>
+						Sign up
 					</button>
 				</form>
 				{success && (

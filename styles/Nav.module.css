@@ -4,6 +4,13 @@
 	border-radius: 15px;
 }
 
+.user {
+	/* background-color: rgb(255, 248, 240); */
+	padding: 10px 15px;
+	border-radius: 15px;
+	margin-right: 0px;
+}
+
 .login:hover {
 	background-color: rgb(255, 238, 216);
 	cursor: pointer;
