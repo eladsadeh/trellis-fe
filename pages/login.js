@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { Icon } from '@blueprintjs/core';
 
 import { UserContext } from '../context/userContext';
@@ -28,7 +28,7 @@ function Login(props) {
 
 	const handleSubmit = async (ev) => {
 		ev.preventDefault();
-		
+
 		try {
 			const res = await fetch(`${baseUrl}/token/login/`, {
 				method: 'POST',
@@ -39,23 +39,24 @@ function Login(props) {
 			});
 			if (res.status === 200) {
 				const data = await res.json();
-				console.log(data);
 				localStorage.setItem('token', data.auth_token);
-				console.log('user:' , formData);
-				setUser(formData);
+				setUser({ email: formData.email });
 				router.push('/');
 			} else {
 				const data = await res.json();
-				console.log(data.non_field_errors[0]);
 			}
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	};
 
-	if (user) return <Layout>
-		<div>Your are currently logged in as {user.email}. Please logout to change account.</div>
-	</Layout>;
+	if (user)
+		return (
+			<Layout>
+				<div>
+					Your are currently logged in as {user.email}. Please logout to change
+					account.
+				</div>
+			</Layout>
+		);
 
 	return (
 		<Layout>

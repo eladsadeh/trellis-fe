@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 import { UserContext } from '../context/userContext';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
 	const [user, setUser] = useState(null);
+	const router = useRouter();
+
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 	// Check if user has a token and get the user name
@@ -18,20 +22,20 @@ function MyApp({ Component, pageProps }) {
 						Authorization: `Token ${token}`,
 					},
 				});
-        if (res.status === 200) {
-          const data = await res.json()
-		  console.log(data);
-          setUser({email: data.email, id: data.id, token: token})
-        } else {
-          console.log('Could not find user info, please login again');
-          setUser(null);
-          localStorage.clear()
-        }
+				if (res.status === 200) {
+					const data = await res.json();
+					setUser({ email: data.email, id: data.id, token: token });
+				} else {
+					setUser(null);
+					localStorage.clear();
+					router.push('/login');
+				}
 			} catch (err) {
-        console.log(err);
-      }
+				// console.log(err);
+			}
 		} else {
-			console.log('no token found');
+			router.push('/login');
+			// console.log('no token found');
 		}
 	};
 
