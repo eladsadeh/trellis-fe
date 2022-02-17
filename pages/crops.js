@@ -185,19 +185,26 @@ function Crops(props) {
 	}
 	return (
 		<Layout>
+			<StepLink
+				to='crops'
+				number='1'
+				text='Select the crops you want to grow'
+			/>
 			<div className={styles.container}>
-				<h2>Select the crops you want to grow</h2>
-				<form name='new-crop' onSubmit={handleNewCrop}>
-					<button type='submit'>+</button>
+				<form
+					className={styles.inputGroup}
+					name='new-crop'
+					onSubmit={handleNewCrop}>
+					<button className={styles.addButton} type='submit'>➕</button>
 					<input
-						id='new-crop'
+						className={styles.formInput}
 						type='text'
-						placeholder='Crop name'
+						placeholder='Add Crop'
 						value={newCrop}
 						onChange={(ev) => setNewCrop(ev.target.value)}
 					/>
 				</form>
-				<form name='crops-selector' className={styles.formContainer}>
+				<form className={styles.formContainer}>
 					{cropsData.map((crop, idx) => {
 						return (
 							<div key={crop.id} className={styles.checkboxGroup}>
@@ -210,8 +217,11 @@ function Crops(props) {
 									onChange={handleChange}
 								/>
 								<span>{crop.name}</span>
-								<button onClick={(ev) => deleteCrop(ev, crop)}>
-									<Icon color='gray' size={16} icon='delete' />
+								<button
+									className={styles.icon}
+									title='Delete Crop'
+									onClick={(ev) => deleteCrop(ev, crop)}>
+									<Icon color='lightcoral' size={16} icon='delete' />
 								</button>
 							</div>
 						);
@@ -220,7 +230,7 @@ function Crops(props) {
 				<StepLink
 					to='varieties'
 					number='2'
-					text='Choose the varieties you want to grow'
+					text='Next - Choose the varieties you want to grow'
 				/>
 			</div>
 		</Layout>

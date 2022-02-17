@@ -1,5 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import Link from 'next/link';
 import { UserContext } from '../context/userContext';
@@ -7,6 +8,8 @@ import { UserContext } from '../context/userContext';
 import styles from '../styles/Nav.module.css';
 
 function Nav(props) {
+	const router = useRouter();
+
 	const { user, setUser } = useContext(UserContext);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -27,7 +30,7 @@ function Nav(props) {
 				setUser(null);
 				// setLoggedIn(false);
 				localStorage.clear();
-				navigate('/login');
+				router.push('/');
 			}
 		} catch (error) {}
 		// clear the token out of the local storage
@@ -45,9 +48,12 @@ function Nav(props) {
 				</Link>
 			</h1>
 			{user ? (
-				<span className={styles.login} onClick={handleLogout}>
-					Logout
-				</span>
+				<div>
+					<span className={styles.user}>{user.email}</span>
+					<span className={styles.login} onClick={handleLogout}>
+						Logout
+					</span>
+				</div>
 			) : (
 				<Link href='/login'>
 					<a className={styles.login}>Login</a>
