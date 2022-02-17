@@ -5,10 +5,7 @@ const Layout = (props) => (
 	<>
 		<Head>
 			<title>Trellis</title>
-			<link
-				rel='icon'
-				href='https://cdn3.iconfinder.com/data/icons/hotel-10-1/48/452-512.png'
-			/>
+			<link rel='icon' href='/favicon.ico' />
 		</Head>
 		<div className='layout'>
 			<Nav />
