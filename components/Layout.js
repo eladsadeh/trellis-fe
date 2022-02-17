@@ -10,7 +10,7 @@ const Layout = (props) => (
 				href='https://cdn3.iconfinder.com/data/icons/hotel-10-1/48/452-512.png'
 			/>
 		</Head>
-		<div>
+		<div className='layout'>
 			<Nav />
 			<main>{props.children}</main>
 		</div>

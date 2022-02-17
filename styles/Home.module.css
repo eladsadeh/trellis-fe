@@ -5,49 +5,7 @@
   padding: 0;
 }
 
-.card {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px 20px;
-  width: min(80%, 500px);
-  transition: color 0.15s ease;
-  border-radius: 20px;
-  margin: 10px;
-}
 
-.card:hover,
-.card:focus,
-.card:active {
-  /* color: #0070f3;
-  border-color: #0070f3;*/
-} 
-
-.card span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  width: 4rem;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-}
-.card p {
-  margin: 0;
-  text-align: left;
-  font-size: 1.25rem;
-  padding: 10px;
-  /* line-height: 1.5; */
-}
-
-.card.crops {
-  background-color: bisque;
-}
-.card.crops span {
-  background-color: burlywood;
-}
 
 .description {
   margin: 2rem 0;

@@ -1,0 +1,76 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  width: min(400px, 95vw);
+  transition: color 0.15s ease;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  /* color: #0070f3;
+  border-color: #0070f3;*/
+} 
+
+.card span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  width: 4rem;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.card p {
+  margin: 0;
+  text-align: left;
+  font-size: 1.25rem;
+  padding: 10px;
+  /* line-height: 1.5; */
+}
+
+.card.crops {
+  background-color: #ccffe6;
+}
+.card.crops span {
+  background-color: #00e677;
+}
+
+.card.varieties {
+  background-color: #ffe6e6;
+}
+.card.varieties span {
+  background-color: #ff8080;
+}
+.card.seeds {
+  background-color: #ffffcc;
+}
+.card.seeds span {
+  background-color: #ffcc66;
+}
+.card.plantings {
+  background-color: bisque;
+}
+.card.plantings span {
+  background-color: burlywood;
+}
+
+.button {
+  padding: 5px 10px;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  background-color: rgb(255, 241, 224);
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: bisque;
+}

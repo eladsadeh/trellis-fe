@@ -1,0 +1,58 @@
+.container {
+	display: flex;
+    flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    animation: fadeInAnimation ease-in 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.formContainer {
+    margin: 20px;
+	display: flex;
+    flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+.checkboxGroup {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid gray;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+.checkboxGroup span {
+    margin-left: 5px;
+    font-size: 18px;
+}
+.inputGroup {
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0px;
+}
+
+.formInput {
+	margin-top: 5px;
+	padding: 5px 10px;
+	font-size: 18px;
+	/* margin-top: 5px; */
+	border: 1px solid gray;
+	border-radius: 5px;
+}
