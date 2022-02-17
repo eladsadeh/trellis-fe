@@ -12,7 +12,6 @@ function Seeds(props) {
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 	function calcOnces(crop, variety) {
-		console.log('calc ounces for:', crop.name, variety.name);
 		const seeds_per =
 			variety.method === 'DS'
 				? crop.seeds_per_feet
@@ -28,13 +27,11 @@ function Seeds(props) {
 	}
 
 	function calcGrams(crop, variety) {
-		console.log('calc grams for:', crop.name, variety.name);
 		const seeds_per =
 			variety.method === 'DS'
 				? crop.seeds_per_feet
 				: crop.seeds_per_plant * 1.15;
 		const grams = ((seeds_per * variety.quantity) / variety.seeds_oz) * 28.3495;
-		console.log(grams);
 		if (Math.ceil(grams * 10) < 2) return '1/10g';
 		else if (Math.ceil(grams * 2) < 2) return '1/2g';
 		else return `${Math.ceil(grams)}g`;
@@ -43,9 +40,7 @@ function Seeds(props) {
 	const getCropsData = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
 			try {
-				console.log('fetching crops from', `${baseUrl}/crops?selected=true`);
 				const res = await fetch(`${baseUrl}/crops?selected=true`, {
 					headers: {
 						Authorization: `Token ${token}`,
@@ -53,18 +48,17 @@ function Seeds(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					console.log('crops:', data);
 					prepareSeedsData(data);
 				} else {
 					// const data = await res.json();
-					console.log(res.status);
+					// console.log(res.status);
 				}
 			} catch (err) {
-				console.log('error:', err);
+				// console.log('error:', err);
 			}
 		} else {
-			console.log('no token found');
-			alert('Login Infomation not found - Please login');
+			// console.log('no token found');
+			// alert('Login Infomation not found - Please login');
 			router.push('/login');
 		}
 	};
@@ -86,7 +80,7 @@ function Seeds(props) {
 					variety.method,
 				]);
 				ounces = calcOnces(crop, variety);
-				grams = calcGrams(crop,variety)
+				grams = calcGrams(crop, variety);
 				console.log(ounces, grams);
 				order.push({
 					crop: crop.name,
@@ -94,9 +88,12 @@ function Seeds(props) {
 					method: variety.method,
 					ounces: ounces,
 					grams: grams,
-					amount: `${Math.ceil(variety.method === 'DS' ? variety.quantity * crop.seeds_per_feet: variety.quantity * crop.seeds_per_plant * 1.15)}`
+					amount: `${Math.ceil(
+						variety.method === 'DS'
+							? variety.quantity * crop.seeds_per_feet
+							: variety.quantity * crop.seeds_per_plant * 1.15
+					)}`,
 				});
-				
 			});
 		});
 		console.log(seeds);

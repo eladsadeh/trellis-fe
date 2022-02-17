@@ -16,9 +16,7 @@ function Varieties(props) {
 	const getCropsData = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
 			try {
-				console.log('fetching crops from', `${baseUrl}/crops?selected=true`);
 				const res = await fetch(`${baseUrl}/crops?selected=true`, {
 					headers: {
 						Authorization: `Token ${token}`,
@@ -26,17 +24,16 @@ function Varieties(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					console.log('crops:', data);
 					setCropsData(data);
 				} else {
 					// const data = await res.json();
-					console.log(res.status);
+					// console.log(res.status);
 				}
 			} catch (err) {
-				console.log('error:', err);
+				// console.log('error:', err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 			router.push('/login');
 		}
 	};
@@ -59,7 +56,6 @@ function Varieties(props) {
 	};
 
 	useEffect(() => {
-		console.log('varieties is mounting:');
 		getCropsData();
 	}, []);
 

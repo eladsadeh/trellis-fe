@@ -21,9 +21,9 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 			/[0-9]+/.test(form.dtm) &&
 			/[0-9]+/.test(form.quantity) &&
 			/[0-9]+/.test(form.seeds_oz);
-		console.log(isValidated);
+		// console.log(isValidated);
 		return isValidated;
-	}
+	};
 
 	const deleteVariety = (id, cropId) => {
 		// Find the crop object
@@ -83,7 +83,6 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 	};
 
 	const handleCancel = () => {
-		console.log('cancel:', formData);
 		let crops = [...cropsData];
 		// If it's a new variety, remove it from the crop
 		if (isNewVariety) {
@@ -103,20 +102,15 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 
 	const handleSaveOrEdit = async (ev) => {
 		ev.preventDefault();
-		console.log('handle save and edit');
 		// IF not in edit mode, turn on edit
 		if (!edit) {
 			setEdit(!edit);
 		} else {
-			console.log('save:', formData);
-			console.log('new = ', isNewVariety);
 			// set fetch method, end point, and good status code
 			const method = isNewVariety ? 'POST' : 'PUT';
 			const endPoint = isNewVariety ? '' : `${formData.id}`;
 			const status = isNewVariety ? 201 : 200;
 			const token = localStorage.getItem('token');
-			console.log(`${method}`, `${baseUrl}/varieties/${endPoint}`);
-			console.log(`${method}`, JSON.stringify(formData));
 			if (token) {
 				try {
 					const res = await fetch(`${baseUrl}/varieties/${endPoint}`, {
@@ -129,23 +123,23 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 					});
 					if (res.status === status) {
 						const data = await res.json();
-						console.log('res :', data);
+						// console.log('res :', data);
 						// if its a new variety, add it to the array
 						if (isNewVariety) {
-							console.log('add:', data);
+							// console.log('add:', data);
 							addVariety(data);
 						} else {
 							// update the form state
 							updateVariety(data);
 						}
 					} else {
-						console.log('bad res:', res);
+						// console.log('bad res:', res);
 					}
 				} catch (err) {
-					console.log(err);
+					// console.log(err);
 				}
 			} else {
-				console.log('no token found');
+				// console.log('no token found');
 				router.push('/login');
 			}
 		}

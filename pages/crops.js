@@ -9,14 +9,6 @@ import Layout from '../components/Layout';
 import StepLink from '../components/StepLink';
 import styles from '../styles/crops.module.css';
 
-// export async function getStaticProps() {
-// 	return {
-// 		props: {
-// 			test: 'My props',
-// 		},
-// 	};
-// }
-
 function Crops(props) {
 	// const { user } = useContext(UserContext);
 	const router = useRouter();
@@ -28,7 +20,6 @@ function Crops(props) {
 	const getCropsData = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
 			try {
 				const res = await fetch(`${baseUrl}/crops/`, {
 					headers: {
@@ -37,17 +28,16 @@ function Crops(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					console.log('get crops:', data);
 					setCropsData(data);
 				} else {
 					const data = await res.json();
-					console.log(data);
+					// console.log(data);
 				}
 			} catch (err) {
-				console.log(err);
+				// console.log(err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 			router.push('/login');
 		}
 	};
@@ -55,9 +45,6 @@ function Crops(props) {
 	const putCropData = async (crop) => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
-			console.log('PUT:', `${baseUrl}/crops/${crop.id}`);
-			console.log('PUT:', JSON.stringify(crop));
 			try {
 				const res = await fetch(`${baseUrl}/crops/${crop.id}`, {
 					method: 'PUT',
@@ -69,26 +56,24 @@ function Crops(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
-					console.log('res:', data);
+					// console.log('res:', data);
 				} else {
 					const data = await res.json();
-					console.log('bad res:', data);
+					// console.log('bad res:', data);
 				}
 			} catch (err) {
-				console.log(err);
+				// console.log(err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 			router.push('/login');
 		}
 	};
 
 	const deleteCrop = async (ev, crop) => {
 		ev.preventDefault();
-		console.log('delete crop:', crop);
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('DELETE:', `${baseUrl}/crops/${crop.id}`);
 			try {
 				const res = await fetch(`${baseUrl}/crops/${crop.id}`, {
 					method: 'DELETE',
@@ -97,26 +82,23 @@ function Crops(props) {
 					},
 				});
 				if (res.status === 204) {
-					console.log('crop deleted:', crop);
 					// remove the crop from cropsData array
 					const crops = cropsData.filter((c) => c.id !== crop.id);
 					setCropsData(crops);
-					console.log(cropsData);
 				} else {
 					alert(`Could not delete ${crop.name}: ${res.status}`);
-					console.log('bad res:', res);
+					// console.log('bad res:', res);
 				}
 			} catch (err) {
-				console.log(err);
+				// console.log(err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 			router.push('/login');
 		}
 	};
 
 	useEffect(() => {
-		console.log('crops is mounting:');
 		getCropsData();
 	}, []);
 
@@ -125,13 +107,12 @@ function Crops(props) {
 		let crops = [...cropsData];
 		crops[idx].selected = ev.target.checked;
 		setCropsData(crops);
-		putCropData(crops[idx]);
 		// updata (PUT) crop in DB
+		putCropData(crops[idx]);
 	};
 
 	async function handleNewCrop(ev) {
 		ev.preventDefault();
-		console.log(newCrop);
 		// Create a new crop object
 		const crop = {
 			// owner_id: user.id,
@@ -143,9 +124,6 @@ function Crops(props) {
 		};
 		const token = localStorage.getItem('token');
 		if (token) {
-			console.log('found token:', token);
-			console.log('CREATE:', `${baseUrl}/crops/`);
-			console.log('CREATE:', JSON.stringify(crop));
 			try {
 				const res = await fetch(`${baseUrl}/crops/`, {
 					method: 'POST',
@@ -157,22 +135,20 @@ function Crops(props) {
 				});
 				if (res.status === 201) {
 					const data = await res.json();
-					console.log('res:', data);
 					const crops = [...cropsData];
 					// add the new crop with ID to array
 					crops.push(data);
-					console.log('new crops:', crops);
 					setCropsData(crops);
 					setNewCrop('');
 				} else {
-					console.log('bad status:', res.status);
+					// console.log('bad status:', res.status);
 					alert(`Crop already exist - try another name: ${res.status}`);
 				}
 			} catch (err) {
-				console.log('error:', err);
+				// console.log('error:', err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 		}
 	}
 
@@ -195,7 +171,9 @@ function Crops(props) {
 					className={styles.inputGroup}
 					name='new-crop'
 					onSubmit={handleNewCrop}>
-					<button className={styles.addButton} type='submit'>➕</button>
+					<button className={styles.addButton} type='submit'>
+						➕
+					</button>
 					<input
 						className={styles.formInput}
 						type='text'

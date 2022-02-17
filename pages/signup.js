@@ -12,7 +12,7 @@ function Signup(props) {
 	// const { user, setUser } = useContext(UserContext);
 	const [showPassword, setShowPassword] = useState(false);
 	// const [error, setError] = useState('');
-    let error = '';
+	let error = '';
 	const [success, setSuccess] = useState(false);
 
 	const initialFormData = {
@@ -46,12 +46,11 @@ function Signup(props) {
 		setFormData((prevState) => {
 			return { ...prevState, [ev.target.id]: ev.target.value };
 		});
-        error = isError();
+		error = isError();
 	};
 
 	const handleSignup = async (ev) => {
 		ev.preventDefault();
-		console.log(JSON.stringify({ ...formData, username: formData.email }));
 		try {
 			const res = await fetch(`${baseUrl}/users/`, {
 				method: 'POST',
@@ -62,19 +61,17 @@ function Signup(props) {
 			});
 			if (res.status === 201) {
 				const data = await res.json();
-				console.log(data);
 				localStorage.setItem('token', data.auth_token);
 				setSuccess(true);
 				setTimeout(() => {
 					router.push('/login');
 				}, 3500);
 			} else {
-				const data = await res.json();
-				console.log(data.password);
+				// const data = await res.json();
 				// console.log(data.non_field_errors[0]);
 			}
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 
