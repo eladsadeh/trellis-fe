@@ -104,7 +104,7 @@ function Login(props) {
 				</form>
 				<div className={styles.card}>
 					<span>
-						Don't have an account yet?
+						Don&apos;t have an account yet?
 						<br />
 						<br />
 					</span>
