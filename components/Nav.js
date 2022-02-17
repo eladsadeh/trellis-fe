@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
+import { Icon } from '@blueprintjs/core';
 
 import Link from 'next/link';
 import { UserContext } from '../context/userContext';
@@ -9,6 +10,7 @@ import styles from '../styles/Nav.module.css';
 
 function Nav(props) {
 	const router = useRouter();
+	const [showMenu, setShowMenu] = useState(false);
 
 	const { user, setUser } = useContext(UserContext);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -42,11 +44,55 @@ function Nav(props) {
 
 	return (
 		<nav className={styles.navbar}>
-			<h1 className={styles.h1}>
-				<Link href='/'>
-					<a>Trellis</a>
-				</Link>
-			</h1>
+			<div className={styles.links}>
+				<button
+					className={styles.showButton}
+					onClick={() => {
+						setShowMenu(!showMenu);
+					}}>
+					{showMenu ? (
+						<Icon color='black' size={30} icon='cross' />
+					) : (
+						<Icon color='black' size={30} icon='menu' />
+					)}
+				</button>
+				{showMenu && (
+					<div className={showMenu ? styles.navmenu : styles.slideout}>
+						<ul className={styles.navitems}>
+							<li>
+								<Link href='/crops'>
+									<a>Crops</a>
+								</Link>
+							</li>
+							<li>
+								<Link href='/varieties'>
+									<a>Varieties</a>
+								</Link>
+							</li>
+							<li>
+								<Link href='/seeds'>
+									<a>Seeds</a>
+								</Link>
+							</li>
+							<li>
+								<Link href='/plantings'>
+									<a>Plantings</a>
+								</Link>
+							</li>
+							<li>
+								<Link href='/about'>
+									<a>About</a>
+								</Link>
+							</li>
+						</ul>
+					</div>
+				)}
+				<h1 className={styles.heading}>
+					<Link href='/'>
+						<a>Trellis</a>
+					</Link>
+				</h1>
+			</div>
 			{user ? (
 				<div>
 					<span className={styles.user}>{user.email}</span>

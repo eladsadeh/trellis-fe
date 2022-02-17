@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Icon } from '@blueprintjs/core';
 import Layout from '../components/Layout';
 import StepLink from '../components/StepLink';
@@ -6,6 +7,8 @@ import VarietyForm from '../components/VarietyForm';
 import styles from '../styles/varieties.module.css';
 
 function Varieties(props) {
+	const router = useRouter();
+
 	const [cropsData, setCropsData] = useState(null);
 	// const [newVariety, setNewVariety] = useState('');
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -34,7 +37,6 @@ function Varieties(props) {
 			}
 		} else {
 			console.log('no token found');
-			alert('Login Infomation not found - Please login');
 			router.push('/login');
 		}
 	};
@@ -111,11 +113,7 @@ function Varieties(props) {
 					);
 				})}
 			</div>
-			<StepLink
-				to='seeds'
-				number='3'
-				text='Order your seeds'
-			/>
+			<StepLink to='seeds' number='3' text='Order your seeds' />
 		</Layout>
 	);
 }

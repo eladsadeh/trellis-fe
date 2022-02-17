@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 
 function plantings(props) {
 	return <Layout>
-        <div>plantings</div>
+        <div>plantings Page: Comming soon ...</div>
     </Layout>;
 }
 
