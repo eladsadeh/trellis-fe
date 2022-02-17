@@ -11,6 +11,35 @@ function Seeds(props) {
 	// const [newVariety, setNewVariety] = useState('');
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+	function calcOnces(crop, variety) {
+		console.log('calc ounces for:', crop.name, variety.name);
+		const seeds_per =
+			variety.method === 'DS'
+				? crop.seeds_per_feet
+				: crop.seeds_per_plant * 1.15;
+		const ounces = (seeds_per * variety.quantity) / variety.seeds_oz;
+		if (Math.ceil(ounces * 32) < 2) return '1/32';
+		else if (Math.ceil(ounces * 16) < 2) return '1/16';
+		else if (Math.ceil(ounces * 8) < 2) return '1/8';
+		else if (Math.ceil(ounces * 4) < 2) return '1/4';
+		else if (Math.ceil(ounces * 2) < 2) return '1/2';
+		else if (Math.ceil(ounces) < 2) return '1';
+		else return `${Math.round(ounces * 100) / 100}`;
+	}
+
+	function calcGrams(crop, variety) {
+		console.log('calc grams for:', crop.name, variety.name);
+		const seeds_per =
+			variety.method === 'DS'
+				? crop.seeds_per_feet
+				: crop.seeds_per_plant * 1.15;
+		const grams = ((seeds_per * variety.quantity) / variety.seeds_oz) * 28.3495;
+		console.log(grams);
+		if (Math.ceil(grams * 10) < 2) return '1/10g';
+		else if (Math.ceil(grams * 2) < 2) return '1/2g';
+		else return `${Math.ceil(grams)}g`;
+	}
+
 	const getCropsData = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
@@ -44,6 +73,9 @@ function Seeds(props) {
 		console.log('preparing seeds data');
 		const seeds = [];
 		const order = [];
+		let ounces = '';
+		let grams = 0;
+		let qt = 0;
 		cropsData.forEach((crop) => {
 			crop.varieties.forEach((variety) => {
 				seeds.push([
@@ -53,10 +85,23 @@ function Seeds(props) {
 					variety.seeds_oz,
 					variety.method,
 				]);
+				ounces = calcOnces(crop, variety);
+				grams = calcGrams(crop,variety)
+				console.log(ounces, grams);
+				order.push({
+					crop: crop.name,
+					variety: variety.name,
+					method: variety.method,
+					ounces: ounces,
+					grams: grams,
+					amount: `${Math.ceil(variety.method === 'DS' ? variety.quantity * crop.seeds_per_feet: variety.quantity * crop.seeds_per_plant * 1.15)}`
+				});
+				
 			});
 		});
 		console.log(seeds);
-		setSeedsData(seeds);
+		console.log(order);
+		setSeedsData(order);
 	}
 
 	useEffect(() => {
@@ -81,19 +126,21 @@ function Seeds(props) {
 							<th>Crop</th>
 							<th>Variety</th>
 							<th>Method</th>
-							<th>Quntity</th>
-							<th>Seeds/Oz</th>
+							<th>Ounces</th>
+							<th>Grams</th>
+							<th>Amount</th>
 						</tr>
 					</thead>
 					<tbody>
 						{seedsData.map((variety, idx) => {
 							return (
 								<tr key={idx}>
-									<td style={{ textAlign: 'left' }}>{variety[0]}</td>
-									<td style={{ textAlign: 'left' }}>{variety[1]}</td>
-									<td>{variety[4]}</td>
-									<td>{variety[2]}</td>
-									<td>{variety[3]}</td>
+									<td style={{ textAlign: 'left' }}>{variety.crop}</td>
+									<td style={{ textAlign: 'left' }}>{variety.variety}</td>
+									<td>{variety.method}</td>
+									<td>{variety.ounces}</td>
+									<td>{variety.grams}</td>
+									<td>{variety.amount}</td>
 								</tr>
 							);
 						})}
