@@ -96,8 +96,7 @@ function Seeds(props) {
 				});
 			});
 		});
-		console.log(seeds);
-		console.log(order);
+
 		setSeedsData(order);
 	}
 
@@ -109,7 +108,7 @@ function Seeds(props) {
 	if (!seedsData) {
 		return (
 			<Layout>
-				<div>Loading Data ... Plaease wait</div>>
+				<div>Loading Data ... Plaease wait</div>
 			</Layout>
 		);
 	}
