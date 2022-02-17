@@ -6,7 +6,7 @@
   padding: 10px 20px;
   width: min(400px, 95vw);
   transition: color 0.15s ease;
-  border-radius: 20px;
+  border-radius: 8px;
   margin: 10px;
   border: 1px solid gray;
 }

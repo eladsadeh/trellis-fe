@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { Icon } from '@blueprintjs/core';
 
-
 import Link from 'next/link';
 import { UserContext } from '../context/userContext';
 
@@ -52,14 +51,9 @@ function Nav(props) {
 						setShowMenu(!showMenu);
 					}}>
 					{showMenu ? (
-						<Icon
-							className={styles.iconClose}
-							color='black'
-							size={30}
-							icon='cross'
-						/>
+						<Icon color='black' size={30} icon='cross' />
 					) : (
-						<Icon className={styles.iconOpen} color='black' size={30} icon='menu' />
+						<Icon color='black' size={30} icon='menu' />
 					)}
 				</button>
 				{showMenu && (
