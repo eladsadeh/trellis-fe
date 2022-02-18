@@ -29,13 +29,10 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		// Find the crop object
 		let crops = [...cropsData];
 		const cropIdx = crops.findIndex((e) => e.id === cropId);
-		console.log('delete: crop index =', cropIdx);
 		// Filter out the variety
-		console.log('before:', crops[cropIdx].varieties);
 		crops[cropIdx].varieties = crops[cropIdx].varieties.filter(
 			(e) => e.id !== id
 		);
-		console.log('after:', crops[cropIdx].varieties);
 		// update state
 		setCropsData(crops);
 	};
@@ -44,12 +41,9 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		let crops = [...cropsData];
 		// Find the crop object
 		const cropIdx = crops.findIndex((e) => e.id === variety.crop_id);
-		console.log('add: crop index =', cropIdx);
 		// remove the variety without ID (added for new variety)
 		const removed = crops[cropIdx].varieties.pop();
-		console.log('removing tmp variety:', removed);
 		// add the variety retruned from the POST request (with ID)
-		console.log('adding:', variety);
 		crops[cropIdx].varieties.push(variety);
 		// update states
 		setCropsData(crops);
@@ -60,18 +54,11 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		let crops = [...cropsData];
 		// Find the crop object
 		const cropIdx = crops.findIndex((e) => e.id === variety.crop_id);
-		console.log('update: crop index =', cropIdx);
 		// find the index of the variety in the crop varieties array
 		const varietyIdx = crops[cropIdx].varieties.findIndex(
 			(e) => e.id === variety.id
 		);
-		console.log(
-			'updating variety:',
-			varietyIdx,
-			crops[cropIdx].varieties[varietyIdx]
-		);
 		// replace the variety with the updated one
-		console.log('replacing:', variety);
 		crops[cropIdx].varieties[varietyIdx] = variety;
 		// update states
 		setCropsData(crops);
@@ -88,7 +75,6 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 		if (isNewVariety) {
 			// Find the crop object
 			const cropIdx = crops.findIndex((e) => e.id === formData.crop_id);
-			console.log('cancel: crop index =', cropIdx);
 			// // remove the variety without ID (added for new variety)
 			const removed = crops[cropIdx].varieties.pop();
 			// // update state
@@ -149,13 +135,11 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 	const handleDelete = async (ev) => {
 		ev.preventDefault();
 		// Send DELETE request with variety ID
-		console.log('delete:', formData);
 		// set fetch method, end point, and good status code
 		const method = 'DELETE';
 		const endPoint = `varieties/${formData.id}`;
 		const status = 204;
 		const token = localStorage.getItem('token');
-		console.log(`${method}`, `${baseUrl}/${endPoint}`, formData.id);
 		if (token) {
 			try {
 				const res = await fetch(`${baseUrl}/${endPoint}`, {
@@ -169,19 +153,15 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 				if (res.status === status) {
 					// IF request is successful, delete the variety from the crop object
 					deleteVariety(formData.id, formData.crop_id);
-					// find the crop object using crop ID
-					// filter out the deleted variety
-					// update the crops state
+
 					// const data = await res.json();
-					console.log('res :', res);
 				} else {
-					console.log('bad res:', res);
 				}
 			} catch (err) {
-				console.log('error', err);
+				// console.log('error', err);
 			}
 		} else {
-			console.log('no token found');
+			// console.log('no token found');
 			router.push('/login');
 		}
 	};

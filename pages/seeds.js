@@ -41,7 +41,7 @@ function Seeds(props) {
 		const token = localStorage.getItem('token');
 		if (token) {
 			try {
-				const res = await fetch(`${baseUrl}/crops?selected=true`, {
+				const res = await fetch(`${baseUrl}/crops/?selected=true`, {
 					headers: {
 						Authorization: `Token ${token}`,
 					},
@@ -101,7 +101,6 @@ function Seeds(props) {
 	}
 
 	useEffect(() => {
-		console.log('seeds is mounting:');
 		getCropsData();
 	}, []);
 
