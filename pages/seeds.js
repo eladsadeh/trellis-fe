@@ -64,24 +64,13 @@ function Seeds(props) {
 	};
 
 	function prepareSeedsData(cropsData) {
-		console.log('preparing seeds data');
-		const seeds = [];
 		const order = [];
 		let ounces = '';
 		let grams = 0;
-		let qt = 0;
 		cropsData.forEach((crop) => {
 			crop.varieties.forEach((variety) => {
-				seeds.push([
-					crop.name,
-					variety.name,
-					variety.quantity,
-					variety.seeds_oz,
-					variety.method,
-				]);
 				ounces = calcOnces(crop, variety);
 				grams = calcGrams(crop, variety);
-				console.log(ounces, grams);
 				order.push({
 					crop: crop.name,
 					variety: variety.name,

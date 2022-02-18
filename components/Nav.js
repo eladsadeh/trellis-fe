@@ -84,6 +84,11 @@ function Nav(props) {
 									<a>About</a>
 								</Link>
 							</li>
+							<li>
+								<Link href='/'>
+									<a>Home</a>
+								</Link>
+							</li>
 						</ul>
 					</div>
 				)}

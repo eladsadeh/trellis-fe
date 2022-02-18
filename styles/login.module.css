@@ -1,8 +1,9 @@
 .container {
+	width: min(300px, 95vw);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
     animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -62,6 +63,7 @@
 }
 
 .card {
+	width: 100%;
 	background-color: bisque;
 	margin-top: 20px;
 	padding: 20px;

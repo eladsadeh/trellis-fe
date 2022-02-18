@@ -11,9 +11,11 @@ function Signup(props) {
 	const router = useRouter();
 	// const { user, setUser } = useContext(UserContext);
 	const [showPassword, setShowPassword] = useState(false);
+	const [showRePassword, setShowRePassword] = useState(false);
 	// const [error, setError] = useState('');
-	let error = '';
 	const [success, setSuccess] = useState(false);
+	const [isValid, setIsValid] = useState(false);
+	const [message, setMessage] = useState('Please enter valid eMail address');
 
 	const initialFormData = {
 		email: '',
@@ -24,29 +26,29 @@ function Signup(props) {
 	const [formData, setFormData] = useState(initialFormData);
 	const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-	const isError = () => {
+	const validateForm = (form) => {
 		// From https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
 		let regex = new RegExp(
 			'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]*)(?=.{8,})'
 		);
 
-		if (!/^[\w\.]+@\w+\.\w+$/.test(formData.email)) {
-			return 'Please enter valid eMail address';
-		} else if (!regex.test(formData.password)) {
-			return 'Password must be 8 charcters long and include UPPER case, lowercase, and a number. You can use the following special characters: !,@,#,$,%,&';
-		} else if (formData.password !== formData.re_password) {
-			return 'Passwords must mutch';
+		if (!/^[\w\.]+@\w+\.\w{2,3}$/.test(form.email)) {
+			setMessage('Please enter a valid eMail address');
+		} else if (!regex.test(form.password)) {
+			setMessage(
+				'Password must be 8 charcters long and include UPPER case, lowercase, and a number. You can use the following special characters: !,@,#,$,%,&'
+			);
+		} else if (form.password !== form.re_password) {
+			setMessage('Re enter the same password again');
 		} else {
-			return '';
+			setMessage('All looks good!');
+			setIsValid(true);
 		}
-		// console.log('error:', error);
 	};
 
 	const handleChange = (ev) => {
-		setFormData((prevState) => {
-			return { ...prevState, [ev.target.id]: ev.target.value };
-		});
-		error = isError();
+		setFormData({ ...formData, [ev.target.id]: ev.target.value });
+		validateForm({ ...formData, [ev.target.id]: ev.target.value });
 	};
 
 	const handleSignup = async (ev) => {
@@ -78,7 +80,7 @@ function Signup(props) {
 	return (
 		<Layout>
 			<div className={styles.container}>
-				<form className='signup-form' onSubmit={handleSignup}>
+				<form className={styles.container} onSubmit={handleSignup}>
 					<h2 className={styles.heading}>Create a new Account</h2>
 					<div className={styles.inputGroup}>
 						<label htmlFor='email'>Email Address</label>
@@ -90,7 +92,7 @@ function Signup(props) {
 							placeholder='Email address'
 							value={formData.email}
 							onChange={handleChange}
-							// onBlur={validateForm}
+							autoFocus
 							required></input>
 					</div>
 					<div className={styles.inputGroup}>
@@ -118,12 +120,12 @@ function Signup(props) {
 						</div>
 					</div>
 					<div className={styles.inputGroup}>
-						<label htmlFor='re_password'>Password</label>
+						<label htmlFor='re_password'>Re-enter Password</label>
 						<div className={styles.password}>
 							<input
 								className={styles.formInput}
 								id='re_password'
-								type={showPassword ? 'text' : 'password'}
+								type={showRePassword ? 'text' : 'password'}
 								value={formData.re_password}
 								placeholder='Password'
 								onChange={handleChange}
@@ -132,19 +134,21 @@ function Signup(props) {
 							<button
 								className={styles.icon}
 								type='button'
-								onClick={() => setShowPassword(!showPassword)}>
+								onClick={() => setShowRePassword(!showRePassword)}>
 								<Icon
 									color='gray'
 									size={20}
-									icon={showPassword ? 'eye-open' : 'eye-off'}
+									icon={showRePassword ? 'eye-open' : 'eye-off'}
 								/>
 							</button>
 						</div>
 					</div>
-					{error && <div className={styles.card}>{error}</div>}
-					<button className={styles.button} type='submit' disabled={!!error}>
-						Sign up
-					</button>
+					<div>
+						<button className={styles.button} type='submit' disabled={!isValid}>
+							Sign up
+						</button>
+					</div>
+					{!isValid && <div className={styles.card}>{message}</div>}
 				</form>
 				{success && (
 					<div className={styles.card}>
