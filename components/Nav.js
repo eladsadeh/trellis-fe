@@ -74,11 +74,11 @@ function Nav(props) {
 									<a>Seeds</a>
 								</Link>
 							</li>
-							<li>
+							{/* <li>
 								<Link href='/plantings'>
 									<a>Plantings</a>
 								</Link>
-							</li>
+							</li> */}
 							<li>
 								<Link href='/about'>
 									<a>About</a>
