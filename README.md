@@ -24,17 +24,22 @@ Since all the information is saved in a database, in order to use the app, the u
 
 The application guide the user through a process of designing the garden. The home page show the steps of the process. Click on a step to go to the relevant step (or choose from the dropdown menu).
 
+<img width="797" alt="Screen Shot 2022-02-18 at 8 55 54 AM" src="https://user-images.githubusercontent.com/93807931/154696316-3e45f081-33b8-4aee-9335-5b8421af6757.png">
+
 ### Crops selection
 
 The first step is to choose the crops you want to grow. In this page, you can select the crops as well as add or delete crops.
+<img width="592" alt="Screen Shot 2022-02-18 at 9 01 16 AM" src="https://user-images.githubusercontent.com/93807931/154696632-8dea331f-fd00-4d40-bd9e-b5de5c843f17.png">
 
 ### Varieties
 
 For each selected crop, you can add/delete/modify varieties. Each crop need to have at least one variety. For each variety, sepecify the method of growing, number of plants/feet to grow, and other attributes specific for that variety.
+<img width="420" alt="Screen Shot 2022-02-18 at 9 04 37 AM" src="https://user-images.githubusercontent.com/93807931/154697182-497ca206-3a91-4265-b72f-210f9c3b7609.png">
 
 ### Seeds order
 
 This page show a list of varieties and the amount of seeds that is needed. Use this list to order your seeds.
+<img width="591" alt="Screen Shot 2022-02-18 at 9 06 29 AM" src="https://user-images.githubusercontent.com/93807931/154697479-025abfd3-5909-4988-a6d9-27ae98cdbecb.png">
 
 ### Planting Plan
 
