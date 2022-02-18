@@ -39,7 +39,6 @@ function Varieties(props) {
 	};
 
 	const addVariety = (idx, cropId) => {
-		console.log('add variety for:', cropId, cropsData[idx]);
 		const newVariety = {
 			crop_id: cropId,
 			name: '',
