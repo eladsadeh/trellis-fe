@@ -24,6 +24,7 @@ function Varieties(props) {
 				});
 				if (res.status === 200) {
 					const data = await res.json();
+					console.log('crops data:' , data);
 					setCropsData(data);
 				} else {
 					// const data = await res.json();
@@ -101,6 +102,7 @@ function Varieties(props) {
 										variety={variety}
 										cropsData={cropsData}
 										setCropsData={setCropsData}
+										getCropsData={getCropsData}
 									/>
 								);
 							})}

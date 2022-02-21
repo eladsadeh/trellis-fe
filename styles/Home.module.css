@@ -5,12 +5,17 @@
   padding: 0;
 }
 
-
-
 .description {
   margin: 2rem 0;
   line-height: 1;
   font-size: 1.5rem;
+}
+
+.link {
+  /* color: red; */
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 4px;
 }
 
 /* CSS from next-create-app */

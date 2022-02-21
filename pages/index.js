@@ -13,6 +13,13 @@ export default function Home() {
 				<div className={styles.description}>
 					Plan your vegetable garden like a pro.
 				</div>
+				<div>
+					<span>(please see the </span>
+					<Link href='/about'>
+						<a className={styles.link}>About</a>
+					</Link>
+					<span> page for information about this application)</span>
+				</div>
 				<StepLink
 					to='crops'
 					number='1'
