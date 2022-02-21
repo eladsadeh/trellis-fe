@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/varietyform.module.css';
 import utilStyles from '../styles/utils.module.css';
 
-function VarietyForm({ variety, cropsData, setCropsData }) {
-	// const [variety, setVariety] = useState(props.variety);
+function VarietyForm({ variety, cropsData, setCropsData, getCropsData }) {
 	const isNewVariety = variety.name ? false : true;
 	const [formData, setFormData] = useState(variety);
 	const [edit, setEdit] = useState(isNewVariety ? true : false);
@@ -15,27 +14,30 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 	};
 
 	const formIsValidated = (form) => {
-		const isValidated = false;
-		isValidated =
+
+		return (
 			/^[a-zA-Z]+[\w ]+/.test(form.name) &&
 			/[0-9]+/.test(form.dtm) &&
 			/[0-9]+/.test(form.quantity) &&
-			/[0-9]+/.test(form.seeds_oz);
-		// console.log(isValidated);
-		return isValidated;
+			/[0-9]+/.test(form.seeds_oz)
+		);
 	};
 
-	const deleteVariety = (id, cropId) => {
+	const deleteVariety = (variety) => {
 		// Find the crop object
 		let crops = [...cropsData];
-		const cropIdx = crops.findIndex((e) => e.id === cropId);
+		const cropIdx = crops.findIndex((e) => e.id === variety.crop_id);
 		// Filter out the variety
-		crops[cropIdx].varieties = crops[cropIdx].varieties.filter(
-			(e) => e.id !== id
-		);
+		const newVarieties = [
+			...crops[cropIdx].varieties.filter((e) => e.id !== variety.id),
+		];
+		crops[cropIdx].varieties = [...newVarieties];
 		// update state
+		setEdit(false);
+		setShowDetail(false);
 		setCropsData(crops);
 	};
+
 	// Add new variety to specific crop
 	const addVariety = (variety) => {
 		let crops = [...cropsData];
@@ -59,7 +61,7 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 			(e) => e.id === variety.id
 		);
 		// replace the variety with the updated one
-		crops[cropIdx].varieties[varietyIdx] = variety;
+		crops[cropIdx].varieties[varietyIdx] = { ...variety };
 		// update states
 		setCropsData(crops);
 		setFormData(variety);
@@ -88,10 +90,8 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 
 	const handleSaveOrEdit = async (ev) => {
 		ev.preventDefault();
-		// IF not in edit mode, turn on edit
-		if (!edit) {
-			setEdit(!edit);
-		} else {
+		// IF in edit mode (it's a SAVE)
+		if (edit) {
 			// set fetch method, end point, and good status code
 			const method = isNewVariety ? 'POST' : 'PUT';
 			const endPoint = isNewVariety ? '' : `${formData.id}`;
@@ -111,13 +111,18 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 						const data = await res.json();
 						// console.log('res :', data);
 						// if its a new variety, add it to the array
-						if (isNewVariety) {
-							// console.log('add:', data);
-							addVariety(data);
-						} else {
-							// update the form state
-							updateVariety(data);
-						}
+						// if (isNewVariety) {
+						// 	// console.log('add:', data);
+						// 	addVariety(data);
+						// } else {
+						// 	// update the form state
+						// 	updateVariety(data);
+						// }
+						// IF request is successful, get updated crops data
+						await getCropsData();
+						// deleteVariety(formData);
+						// setFormData(variety);
+						// setShowDetail(false);
 					} else {
 						// console.log('bad res:', res);
 					}
@@ -128,7 +133,11 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 				// console.log('no token found');
 				router.push('/login');
 			}
+			// Close form
+			setShowDetail(false);
 		}
+		// Toggle edit mode
+		setEdit(!edit);
 	};
 
 	// Delete of existing variety
@@ -151,9 +160,11 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 					body: JSON.stringify(formData),
 				});
 				if (res.status === status) {
-					// IF request is successful, delete the variety from the crop object
-					deleteVariety(formData.id, formData.crop_id);
-
+					// IF request is successful, get updated crops data
+					await getCropsData();
+					// deleteVariety(formData);
+					setFormData(variety);
+					setShowDetail(false);
 					// const data = await res.json();
 				} else {
 				}
@@ -165,6 +176,10 @@ function VarietyForm({ variety, cropsData, setCropsData }) {
 			router.push('/login');
 		}
 	};
+
+	// Reset form data when props are changing
+	// Needed for delete variety
+	useEffect(() => {setFormData(variety)}, [variety])
 
 	return (
 		<div className={styles.container}>

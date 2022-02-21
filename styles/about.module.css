@@ -1,0 +1,23 @@
+.container {
+    text-align: left;
+    width: min(700px, 85vw);
+    padding: 10px 0;
+}
+
+.heading {
+    padding: 10px 0;
+}
+
+.paragraph {
+    margin-bottom: 8px;
+}
+
+.link {
+    border: 1px solid gray;
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
+.list li {
+    padding-bottom: 5px;
+}
